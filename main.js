@@ -25,14 +25,18 @@ var videoName = document.getElementById("videoName");
 videoName.innerText = videoArray[currentVideo].name;
 video.onended = next;
 
-var playListTable = document.getElementById("playListTable");
+var playListTable = document.getElementById("playListTableBody");
 
-videoArray.forEach(function (value, index) {
-    var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
-    var row = document.createElement('tr');
-    row.innerHTML = rowHTML;
-    playListTable.appendChild(row);
-});
+createPlayList();
+
+function createPlayList() {
+    videoArray.forEach(function (value, index) {
+        var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
+        var row = document.createElement('tr');
+        row.innerHTML = rowHTML;
+        playListTable.appendChild(row);
+    });
+}
 
 function next() {
     currentVideo++;
@@ -50,4 +54,11 @@ function prev() {
     }
     videoName.innerText = videoArray[currentVideo].name;
     video.src = videoArray[currentVideo].url;
+}
+
+function add() {
+    var inputText = document.getElementById("inputTextField").value;
+
+    videoArray.push(inputText);
+    createPlayList();
 }

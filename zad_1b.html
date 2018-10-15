@@ -32,7 +32,7 @@
             </div>
         </div>
         <h2>Playlist</h2>
-        <table id="playListTable" class="table table-hover">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>#</th>
@@ -40,10 +40,19 @@
                 <th>Url</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="playListTableBody">
             </tbody>
         </table>
+        <div class="row">
+            <p>Please enter link for add new video</p>
+        </div>
+        <div class="row">
+            <input  id="inputTextField" type="text" name="source">
+            <button type="button" class="btn btn-secondary" onclick="add()">Add</button>
+        </div>
+
     </div>
+
     <script src="main.js"></script>
 </body>
 </html> 
