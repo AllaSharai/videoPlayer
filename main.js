@@ -14,6 +14,10 @@ var videoArray = [
     {
         name: "video4",
         url: "http://www.html5videoplayer.net/videos/toystory.mp4"
+    },
+	{
+        name: "video5",
+        url: "https://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4"
     }
 ];
 
@@ -30,6 +34,7 @@ var playListTable = document.getElementById("playListTableBody");
 createPlayList();
 
 function createPlayList() {
+	playListTableBody.innerHTML = " ";
     videoArray.forEach(function (value, index) {
         var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
         var row = document.createElement('tr');
@@ -57,8 +62,8 @@ function prev() {
 }
 
 function add() {
+	
     var inputText = document.getElementById("inputTextField").value;
-
     videoArray.push(inputText);
     createPlayList();
 }
