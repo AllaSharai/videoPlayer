@@ -21,7 +21,7 @@ var videoArray = [
     }
 ];
 
-var rowTemplate = "<td>%ID%</td><td>%NAME%</td><td>%URL%</td>";
+var rowTemplate = '<td>%ID%</td><td>%NAME%</td><td>%URL%</td><td><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-up btn btn-secondary\"> </button> </div><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-down btn btn-secondary\"> </button> </div>  </div><div class="btn-group mr-2" role="group"> <button type="button" class="glyphicon glyphicon-remove btn btn-secondary"> </button> </div></td>';
 
 var video = document.getElementById("video");
 var currentVideo = 0;
@@ -34,7 +34,7 @@ var playListTable = document.getElementById("playListTableBody");
 createPlayList();
 
 function createPlayList() {
-	playListTableBody.innerHTML = " ";
+	playListTableBody.innerHTML = "";
     videoArray.forEach(function (value, index) {
         var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
         var row = document.createElement('tr');
@@ -62,8 +62,18 @@ function prev() {
 }
 
 function add() {
-	
-    var inputText = document.getElementById("inputTextField").value;
-    videoArray.push(inputText);
+    let nameInput = document.getElementById("nameInput");
+    console.log(nameInput);
+    let urlInput = document.getElementById("urlInput");
+	var nameText = nameInput.value;
+    var urlText = urlInput.value;
+    var obj = {
+        name: nameText,
+        url: urlText
+    };
+    videoArray.push(obj);
     createPlayList();
+    nameInput.value = "";
+    urlInput.value = "";
+
 }
