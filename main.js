@@ -39,6 +39,7 @@ function createPlayList() {
         var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
         var row = document.createElement('tr');
         row.innerHTML = rowHTML;
+        row.children[3].children[2].onclick = deleteRow;
         playListTable.appendChild(row);
     });
 }
@@ -76,4 +77,12 @@ function add() {
     nameInput.value = "";
     urlInput.value = "";
 
+}
+
+function deleteRow(event) {
+    let index = event.target.parentElement.parentElement.parentElement.children[0].innerText - 1;
+    if (index > -1) {
+        videoArray.splice(index, 1);
+        createPlayList();
+    }
 }
