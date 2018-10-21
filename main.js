@@ -38,6 +38,9 @@ function createPlayList() {
     videoArray.forEach(function (value, index) {
         var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
         var row = document.createElement('tr');
+        if (index === currentVideo) {
+            row.classList.add("active")
+        }
         row.innerHTML = rowHTML;
         row.children[3].children[0].onclick = up;
         row.children[3].children[1].onclick = down;
@@ -87,6 +90,9 @@ function up(event) {
     if (index2 < 0){
         return;
     }
+    if (index === currentVideo) {
+        currentVideo = index2;
+    }
     swap(index, index2);
     createPlayList();
 
@@ -98,6 +104,9 @@ function down(event) {
     if (index2 > videoArray.length - 1){
         return;
     }
+    if (index === currentVideo) {
+        currentVideo = index2;
+    }
     swap(index, index2);
     createPlayList();
 }
@@ -106,6 +115,10 @@ function deleteRow(event) {
     let index = event.target.parentElement.parentElement.parentElement.children[0].innerText - 1;
     if (index > -1) {
         videoArray.splice(index, 1);
+        if (index === currentVideo) {
+            currentVideo -= 1;
+            next();
+        }
         createPlayList();
     }
 }
