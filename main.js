@@ -39,6 +39,8 @@ function createPlayList() {
         var rowHTML = rowTemplate.replace("%ID%", index+1).replace("%URL%", value.url).replace("%NAME%", value.name);
         var row = document.createElement('tr');
         row.innerHTML = rowHTML;
+        row.children[3].children[0].onclick = up;
+        row.children[3].children[1].onclick = down;
         row.children[3].children[2].onclick = deleteRow;
         playListTable.appendChild(row);
     });
@@ -79,10 +81,37 @@ function add() {
 
 }
 
+function up(event) {
+    let index = event.target.parentElement.parentElement.parentElement.children[0].innerText - 1;
+    let index2 = index - 1;
+    if (index2 < 0){
+        return;
+    }
+    swap(index, index2);
+    createPlayList();
+
+}
+
+function down(event) {
+    let index = event.target.parentElement.parentElement.parentElement.children[0].innerText - 1;
+    let index2 = index + 1;
+    if (index2 > videoArray.length - 1){
+        return;
+    }
+    swap(index, index2);
+    createPlayList();
+}
+
 function deleteRow(event) {
     let index = event.target.parentElement.parentElement.parentElement.children[0].innerText - 1;
     if (index > -1) {
         videoArray.splice(index, 1);
         createPlayList();
     }
+}
+
+function swap(index1, index2) {
+    let tmp = videoArray[index1];
+    videoArray[index1] = videoArray[index2];
+    videoArray[index2] = tmp;
 }
