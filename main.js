@@ -20,7 +20,6 @@ var videoArray = [
         url: "https://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4"
     }
 ];
-
 var rowTemplate = '<td>%ID%</td><td>%NAME%</td><td>%URL%</td><td><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-up btn btn-secondary\"> </button> </div><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-down btn btn-secondary\"> </button> </div>  </div><div class="btn-group mr-2" role="group"> <button type="button" class="glyphicon glyphicon-remove btn btn-secondary"> </button> </div></td>';
 
 var video = document.getElementById("video");
@@ -28,8 +27,34 @@ var currentVideo = 0;
 var videoName = document.getElementById("videoName");
 videoName.innerText = videoArray[currentVideo].name;
 video.onended = next;
+var progressBar = document.getElementById("videoProgress");
+var volumeProgress = document.getElementById("videoVolumeProgress");
 
 var playListTable = document.getElementById("playListTableBody");
+
+
+var slider = document.getElementById("myRange");
+var volumeSlider = document.getElementById("volumeSlider");
+volumeSlider.value = video.volume * 100;
+
+video.onvolumechange = function(){
+    volumeSlider.value = video.volume * 100;
+    volumeProgress.value = video.volume * 100;
+};
+
+volumeSlider.oninput = function(){
+    video.volume = volumeSlider.value / 100;
+};
+
+video.ontimeupdate = function () {
+    slider.value = video.currentTime * 100 / video.duration;
+    progressBar.value = video.currentTime * 100 / video.duration;
+};
+
+slider.oninput = function() {
+    video.currentTime = slider.value * video.duration / 100;
+};
+
 
 createPlayList();
 
@@ -56,6 +81,8 @@ function next() {
     }
     videoName.innerText = videoArray[currentVideo].name;
     video.src = videoArray[currentVideo].url;
+    createPlayList();
+
 }
 
 function prev() {
@@ -65,6 +92,7 @@ function prev() {
     }
     videoName.innerText = videoArray[currentVideo].name;
     video.src = videoArray[currentVideo].url;
+    createPlayList();
 }
 
 function add() {

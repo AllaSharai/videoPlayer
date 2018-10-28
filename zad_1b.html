@@ -4,11 +4,11 @@
     <title>VideoPlayer</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
+
 
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -20,58 +20,78 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <video id="video" width="800" height="480" autoplay="true" controls
-                   src="https://media.w3.org/2010/05/sintel/trailer.mp4">
-            </video>
+<div class="container">
+    <div class="row justify-content-center">
+        <video id="video" width="800" height="480" autoplay="true" controls
+               src="https://media.w3.org/2010/05/sintel/trailer.mp4">
+        </video>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
         </div>
-        <div class="row justify-content-center">
-            <p id="videoName"></p>
+        <div class="col-md-3">
+            <input type="range" min="1" max="100" value="0" class="slider" id="volumeSlider">
         </div>
-		<div class="row justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-			<div class="btn-group mr-2" role="group">
-				<button type="button" class="btn btn-secondary" onclick="prev()">Previous</button>
-			</div>
-			<div class="btn-group mr-2" role="group">
-				<button type="button" class="btn btn-secondary" onclick="next()">Next</button>
-			</div>
-        </div>
-        <h2>Playlist</h2>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Url</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody id="playListTableBody">
-            </tbody>
-        </table>
-        <div class="row">
-            <p> <b><em>If you want to add video to your playlist please, enter video name and link in form below:</em> </b> </p>
-        </div>
-        <form>
-            <div class="row">
-                <div class="col">
-                    <label>Video name</label>
-                    <input id="nameInput" type="text" name="source" class="form-control">
-                </div>
-                <div class="col">
-                    <label>Video url</label>
-                    <input  id="urlInput" type="text" class="form-control">
-                </div>
-            </div>
-            <div>
-                <br>
-                <button type="button" class="btn btn-secondary"onclick="add()">Add</button>
-            </div>
+    </div>
+    <br>
 
-        </form>
+    <div class="row">
+        <div class="col-md-9">
+            <progress value="0" max="100" id="videoProgress"></progress>
+        </div>
+        <div class="col-md-3">
+            <progress value="100" max="100" id="videoVolumeProgress"></progress>
+        </div>
     </div>
 
-    <script src="main.js"></script>
+    <div class="row justify-content-center">
+        <p id="videoName"></p>
+    </div>
+    <div class="row justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-secondary" onclick="prev()">Previous</button>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-secondary" onclick="next()">Next</button>
+        </div>
+    </div>
+    <h2>Playlist</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Url</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="playListTableBody">
+        </tbody>
+    </table>
+    <div class="row">
+        <p><b><em>If you want to add video to your playlist please, enter video name and link in form below:</em> </b>
+        </p>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col">
+                <label>Video name</label>
+                <input id="nameInput" type="text" name="source" class="form-control">
+            </div>
+            <div class="col">
+                <label>Video url</label>
+                <input id="urlInput" type="text" class="form-control">
+            </div>
+        </div>
+        <div>
+            <br>
+            <button type="button" class="btn btn-secondary" onclick="add()">Add</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="main.js"></script>
 </body>
 </html> 
