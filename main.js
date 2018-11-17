@@ -20,12 +20,19 @@ var videoArray = [
         url: "https://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4"
     }
 ];
+
+videoArray = JSON.parse(localStorage.getItem("videoArray"));
+
 var rowTemplate = '<td>%ID%</td><td>%NAME%</td><td>%URL%</td><td><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-up btn btn-secondary\"> </button> </div><div class=\"btn-group mr-2\" role=\"group\"> <button type=\"button\" class=\"glyphicon glyphicon-arrow-down btn btn-secondary\"> </button> </div>  </div><div class="btn-group mr-2" role="group"> <button type="button" class="glyphicon glyphicon-remove btn btn-secondary"> </button> </div></td>';
 
 var video = document.getElementById("video");
-var currentVideo = 0;
 var videoName = document.getElementById("videoName");
-videoName.innerText = videoArray[currentVideo].name;
+
+var currentVideo = localStorage.getItem("currentVideo");
+if (currentVideo === undefined) {
+    currentVideo = 0;
+}
+
 video.onended = next;
 var progressBar = document.getElementById("videoProgress");
 var volumeProgress = document.getElementById("videoVolumeProgress");
@@ -49,6 +56,8 @@ volumeSlider.oninput = function(){
 video.ontimeupdate = function () {
     slider.value = video.currentTime * 100 / video.duration;
     progressBar.value = video.currentTime * 100 / video.duration;
+    videoArray[currentVideo].time = video.currentTime;
+    localStorage.setItem("videoArray", JSON.stringify(videoArray));
 };
 
 slider.oninput = function() {
@@ -57,6 +66,7 @@ slider.oninput = function() {
 
 
 createPlayList();
+setVideo();
 
 function createPlayList() {
 	playListTableBody.innerHTML = "";
@@ -74,15 +84,23 @@ function createPlayList() {
     });
 }
 
+function setVideo() {
+    console.log(videoArray[currentVideo].url);
+    videoName.innerText = videoArray[currentVideo].name;
+    video.src = videoArray[currentVideo].url;
+    if (videoArray[currentVideo].time !== undefined) {
+        video.currentTime = videoArray[currentVideo].time;
+    }
+    localStorage.setItem("currentVideo", currentVideo);
+}
+
 function next() {
     currentVideo++;
     if (currentVideo >= videoArray.length) {
         currentVideo = 0;
     }
-    videoName.innerText = videoArray[currentVideo].name;
-    video.src = videoArray[currentVideo].url;
+    setVideo();
     createPlayList();
-
 }
 
 function prev() {
@@ -90,8 +108,7 @@ function prev() {
     if (currentVideo < 0) {
         currentVideo = videoArray.length - 1;
     }
-    videoName.innerText = videoArray[currentVideo].name;
-    video.src = videoArray[currentVideo].url;
+    setVideo();
     createPlayList();
 }
 
